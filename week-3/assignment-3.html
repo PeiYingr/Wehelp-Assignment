@@ -1,0 +1,103 @@
+<!--要求三：JavaScript 取得網路上的資料並顯示在網頁畫面中-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+        <meta charset="utf-8"/>
+        <title>Assignmemt_Week 3</title>
+        <link rel="stylesheet" type="text/css" href="assignment-3-layout.css">
+    </head>
+    <body>
+        <div class="frame">
+            <div class="left">My Website</div>
+            <div class="right">
+                <div class="item">Item 1</div>
+                <div class="item">Item 2</div>
+                <div class="item">Item 3</div>
+                <div class="item">Item 4</div>
+                <div class="mobile">
+                    <img src="menu_hamburger_icon.png"/>
+                </div>   
+            </div>            
+        </div> 
+
+        <div class="welcome">
+            <div class="text">Welcome to MyHome</div>
+        </div>
+        <div class="up">
+            <div class="upleft-square">
+                <div class="upleft-img" id="pic"></div>
+                <div class="title" id="upleft-text"></div>
+            </div>
+            <div class="upright-square">
+                <div class="upright-img" id="pic"></div>
+                <div class="title" id="upright-text"></div>
+            </div>
+        </div>
+            <div class="down">
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>                    
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+            </div>
+        <script>
+            fetch("https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json").then(function(response){
+                   return response.json();      //去解讀回應物件的「json」(如果回應的資料是json的話)
+            }).then(function(data){
+                let collection=data.result.results
+                //利用document.querySelector(CSS選擇器)方法【取得標籤物件】(協助搜尋HTML中相關(我們想要)的物件)
+                //搜尋HTML中id叫做pic的標籤，回傳後放入變數中
+                // querySelectorAll收集放到變數中會試一個陣列
+                let mypic=document.querySelectorAll("#pic")
+                let mytitle=document.querySelectorAll(".title")
+   
+                for(let i=0;i<10;i++){
+                    let name=collection[i].stitle;
+                    let photo=collection[i].file.split("https");
+                    // 建立 img 節點(新標籤)
+                    let newpic=document.createElement("img")
+                    newpic.setAttribute("src","https"+photo[1]);
+                    newpic.setAttribute("height",50);
+                    newpic.setAttribute("width",80);
+                    mypic[i].appendChild(newpic);
+                    // 建立 textNode 文字節點
+                    let newtitle=document.createTextNode(name);
+                    mytitle[i].appendChild(newtitle);
+                } 
+            });
+        </script>
+    </body>
+</html>
+<!--
+    fetch("要連線的網址"):發出連線
+    .then(放入函式):取得伺服器的回應
+    function(回應物件):會幫我們接收到伺服器的回應，放入在回應物件處，之後印出
+-->

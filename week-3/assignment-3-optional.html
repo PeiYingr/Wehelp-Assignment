@@ -1,0 +1,159 @@
+<!--要求四：JavaScript 建立載入更多的按鈕 (Optional)-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+        <meta charset="utf-8"/>
+        <title>Assignmemt_Week 3</title>
+        <link rel="stylesheet" type="text/css" href="assignment-3-optional.css">
+    </head>
+    <body>
+        <div class="frame">
+            <div class="left">My Website</div>
+            <div class="right">
+                <div class="item">Item 1</div>
+                <div class="item">Item 2</div>
+                <div class="item">Item 3</div>
+                <div class="item">Item 4</div>
+                <div class="mobile">
+                    <img src="menu_hamburger_icon.png"/>
+                </div>   
+            </div>            
+        </div> 
+
+        <div class="welcome">
+            <div class="text">Welcome to MyHome</div>
+        </div>
+        <div class="up">
+            <div class="upleft-square">
+                <div class="upleft-img" id="pic"></div>
+                <div class="title" id="upleft-text"></div>
+            </div>
+            <div class="upright-square">
+                <div class="upright-img" id="pic"></div>
+                <div class="title" id="upright-text"></div>
+            </div>
+        </div>
+            <div class="down">
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>                    
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+                <div class="pic">
+                    <div id="pic"></div>
+                    <div class="title"></div>
+                </div>
+            </div>
+            <div class="btn-square">
+                <div 
+                    class="btn"
+                    onmouseover="over(this);" onmouseout="out(this);"
+                    onmousedown="down(this);" onmouseup="up(this);"
+                    onclick="change();"
+                >Load More
+                </div>
+            </div>
+        <script>
+            fetch("https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json").then(function(response){
+                   return response.json();      //去解讀回應物件的「json」(如果回應的資料是json的話)
+            }).then(function(data){
+                let collection=data.result.results
+                // 利用document.querySelector(CSS選擇器)方法【取得標籤物件】(協助搜尋HTML中相關(我們想要)的物件)
+                //  搜尋HTML中id叫做pic的標籤，回傳後放入變數中
+                let mypic=document.querySelectorAll("#pic")     // querySelectorAll收集放到變數中會是一個陣列
+                let mytitle=document.querySelectorAll(".title")
+                for(let i=0;i<10;i++){
+                    let name=collection[i].stitle;
+                    let photo=collection[i].file.split("https");
+                    // 建立 img 節點(新標籤)
+                    let newpic=document.createElement("img")
+                    newpic.setAttribute("src","https"+photo[1]);
+                    newpic.setAttribute("height",50);
+                    newpic.setAttribute("width",80);
+                    mypic[i].appendChild(newpic);
+                    // 建立 textNode 文字節點
+                    let newtitle=document.createTextNode(name);
+                    mytitle[i].appendChild(newtitle);
+                }
+            });
+            // Load more按鈕
+            function over(elem){
+                elem.style.backgroundColor="#ddaaaa";
+            }
+            function out(elem){
+                elem.style.backgroundColor="#ffcccc";
+                elem.style.fontWeight="normal"
+            }
+            function down(elem){
+                elem.style.fontWeight="bold";
+            }
+            function up(elem){
+                elem.style.fontWeight="normal";
+            }
+            // 按Load more之後的變化
+            // x用來計算按load more之後跑了幾個(每按一次最後都會+8)
+            let x=0
+            function change(){
+                fetch("https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json").then(function(response){
+                   return response.json();      //去解讀回應物件的「json」(如果回應的資料是json的話)
+                }).then(function(data){
+                    let collection=data.result.results
+                    collection=collection.slice(10,collection.length)   // 把一開始10個景點從陣列中刪除
+                    for(let i=0;i<8;i++){
+                        let name=collection[i+x].stitle;
+                        let photo=collection[i+x].file.split("https");
+                        // 新增照片+景點名稱的大div區塊
+                        let newpicSquare=document.createElement("div");
+                        newpicSquare.setAttribute("class","pic");
+                        // 新增照片的div區塊
+                        let newpicBox=document.createElement("div") ;
+                        newpicBox.setAttribute("id","pic");  
+                        // 新增照片(放入資料中的照片)
+                        let newpic=document.createElement("img")
+                        newpic.setAttribute("src","https"+photo[1]);
+                        newpic.setAttribute("height",50);
+                        newpic.setAttribute("width",80);
+                        newpicBox.appendChild(newpic);
+                        // 新增景點名的div區塊
+                        let newtitleBox=document.createElement("div") ; 
+                        newtitleBox.setAttribute("class","title");
+                        // 新增景點名(放入資料中的景點名稱)
+                        let newtitle=document.createTextNode(name);
+                        newtitleBox.appendChild(newtitle);                       
+                        //把上方新增的照片&景點名的div區塊新增到 照片+景點名稱的大div區塊中
+                        newpicSquare.appendChild(newpicBox)
+                        newpicSquare.appendChild(newtitleBox);
+                        //把 照片+景點名稱的大div區塊新增到原本的下方div
+                        let mydownCollect=document.querySelector(".down")
+                        mydownCollect.appendChild(newpicSquare)               
+                    } 
+                    x+=8;   //每跑8個紀錄一次
+                })
+            }
+        </script>
+    </body>
+</html>
