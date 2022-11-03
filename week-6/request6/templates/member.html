@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+        <meta charset="utf-8"/>
+        <title> 會員頁 </title>
+        <link rel="stylesheet" type="text/css" href="assignment-6.css">
+    </head>
+    <body>
+        <div class="welcome">
+            <div class="text">❀ 歡迎光臨，這是會員頁 ❀</div>
+        </div>
+        <div class="login">
+            {{ nametext }}，歡迎登入系統
+        </div>
+        <a href="/signout">
+            <div class="signout"> 登出系統 </div>
+        </a>
+        <hr/>
+        <div class="message">快來留言吧</div>
+        <form action="/message" method="POST">
+            <div class="messagecontent">內容<input type="text" name="messagecontent"/></div>
+            <div class="btn-square">
+                <button class="btn"
+                    onmouseover="over(this);" onmouseout="out(this);"
+                    onmousedown="down(this);" onmouseup="up(this);"
+                >送出
+                </button>
+            </div>
+        </form>  
+        <hr/>
+        <div style=height:30px></div>
+        {% for x in result %}
+        <div class="messageall">
+            <span style=font-weight:bold>{{ x[0] }}</span> : {{x[1]}}
+        </div>
+        {% endfor %} 
+        <div style=height:30px></div>
+    </body>
+</html>
