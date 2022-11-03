@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+        <meta charset="utf-8"/>
+        <title> Assignment_Week 6</title>
+        <link rel="stylesheet" type="text/css" href="assignment-6.css">
+    </head>
+    <body>
+        <div class="welcome">
+            <div class="text">歡迎光臨，請註冊登入系統</div>
+        </div>
+        <div class="signup">
+            註冊帳號
+        </div>
+        <form action="/signup" method="POST">
+            <div class="name">姓名<input type="text" name="name"/></div>
+            <div class="count">帳號<input type="text" name="count"/></div>
+            <div class="key">密碼<input type="password" name="key"/></div>
+            <div class="btn-square">
+                <button class="btn"
+                    onmouseover="over(this);" onmouseout="out(this);"
+                    onmousedown="down(this);" onmouseup="up(this);"
+                >註冊
+                </button>
+            </div>
+        </form>       
+        <hr/>
+        <div class="login">
+            登入系統
+        </div>
+        <form action="/signin" method="POST">
+            <div class="count">帳號<input type="text" name="count"/></div>
+            <div class="key">密碼<input type="password" name="key"/></div>
+            <div class="btn-square">
+                <button class="btn"
+                    onmouseover="over(this);" onmouseout="out(this);"
+                    onmousedown="down(this);" onmouseup="up(this);"
+                >登入
+                </button>
+            </div>
+        </form>
+        <script>
+            function over(elem){
+                elem.style.backgroundColor="#ddaaaa";
+            }
+            function out(elem){
+                elem.style.backgroundColor="#ffcccc";
+                elem.style.fontWeight="normal"
+            }
+            function down(elem){
+                elem.style.fontWeight="bold";
+            }
+            function up(elem){
+                elem.style.fontWeight="normal";
+            }
+        </script>
+    </body>
+</html>
