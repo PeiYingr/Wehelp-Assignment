@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+        <meta charset="utf-8"/>
+        <title>Assignment_Week 4</title>
+        <link rel="stylesheet" type="text/css" href="assignment-4.css">
+    </head>
+    <body>
+        <div class="welcome">
+            <div class="text">歡迎光臨，請輸入帳號密碼</div>
+        </div>
+        <div class="login">
+            登入系統
+        </div>
+        <form action="網址路徑">
+            <div class="count">帳號<input type="text" name="count"/></div>
+            <div class="key">密碼 <input type="password" name="key"/></div>
+        </form>
+        <div class="btn-square">
+            <div class="btn"
+                onmouseover="over(this);" onmouseout="out(this);"
+                onmousedown="down(this);" onmouseup="up(this);"
+            >登入
+            </div>
+        </div>
+        <script>
+            function over(elem){
+                elem.style.backgroundColor="#ddaaaa";
+            }
+            function out(elem){
+                elem.style.backgroundColor="#ffcccc";
+                elem.style.fontWeight="normal"
+            }
+            function down(elem){
+                elem.style.fontWeight="bold";
+            }
+            function up(elem){
+                elem.style.fontWeight="normal";
+            }
+        </script>
+    </body>
+</html>
+
