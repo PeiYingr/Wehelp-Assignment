@@ -1,0 +1,145 @@
+body{
+    margin:0;
+    padding:0;
+}
+/*上方標題+選單列+中間歡迎文字*/
+.frame{
+    display:flex;/* 讓下一層次的項目水平(左右)排列 */
+    align-items:center;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.left{
+    flex:none;/*固定配置*/
+    width:30%;
+    font-size:20px;
+    font-weight:bold;
+    text-align:left;
+    margin-left:10px;
+}
+.right{
+    display:flex;/* 讓下一層次的項目水平(左右)排列 */
+    justify-content:flex-end;/* 水平對齊靠右 */
+    align-items:center;
+    flex:auto; /*自動把剩下的空間填滿 */
+    margin-right:10px;
+}
+.item{
+    display: block;
+    flex:none;
+    width:100px;
+    font-size:20px;
+    text-align:right;
+}
+.mobile{
+    display:none;
+}
+.welcome{
+    display:flex;
+    justify-content:center; /*水平對齊置中*/
+    align-items:center; /*垂直對齊置中*/
+    height:300px;
+    background-color:antiquewhite;
+    margin-bottom:50px;
+}
+.text{
+    height:40px;
+    font-size:40px;
+    font-weight:bold;
+    text-align:center;
+}
+
+/*下方主內容兩方框*/
+.up{
+    display:flex;
+    width:1200px;
+    justify-content:space-between;
+    align-items:center;
+    margin:auto;
+}
+.upleft-square,.upright-square{
+    flex:none;
+    width:49%;
+    height:50px;
+    display:flex;
+    align-items:center;
+    background-color:antiquewhite;
+}
+.upleft-img ,.upright-img{
+    flex:none;
+    width:80px;
+}
+.upleft-text ,.upright-text{
+    flex:none;
+    margin-left: 10px;
+    font-size:20px; 
+}
+
+/*下方主內容兩方框*/
+.down{
+    display:flex;
+    flex-wrap: wrap;
+    width:1200px;
+    justify-content:space-between;
+    align-items:center;
+    margin:auto;    
+}
+
+.pic{ 
+    flex:none;
+    width: 280px;
+    height: 180px; 
+}
+.mou{
+    width:100%;
+}
+
+.star{
+    max-height:15px;
+    max-width:15px;
+    position:relative;
+    right:10px;
+    top:20px;  
+}
+
+.title{
+    height:30px;
+    text-align:center;
+    line-height:35px;
+    font-size:20px;
+    position:relative;
+    background-color: white; 
+    opacity:0.6;   
+    bottom:34px
+}
+
+@media (max-width:1200px){
+    .up,.down{
+        flex-wrap:wrap;
+        width:90%;
+        align-items:space-between;
+    }
+    .upleft-square,.upright-square{
+        width:49%;
+    }
+    .pic{
+        width:49%;
+        height:auto;
+    }       
+}
+
+@media (max-width:600px){
+    .item{
+        display:none;
+    }
+    .mobile{
+        display:block;
+    }
+    .upleft-square{
+        width:100%;
+        margin-bottom:20px;
+    }
+    .upright-square,.pic{
+        width:100%;
+    }
+}
