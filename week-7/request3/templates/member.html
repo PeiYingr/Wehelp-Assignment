@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+        <meta charset="utf-8"/>
+        <title> 會員頁 </title>
+        <link rel="stylesheet" type="text/css" href="assignment-7.css">
+    </head>
+    <body>
+        <div class="welcome">
+            <div class="text">❀ 歡迎光臨，這是會員頁 ❀</div>
+        </div>  
+        <div class="login">
+            {{ nametext }}，歡迎登入系統
+        </div>
+        <a href="/signout">
+            <div class="signout"> 登出系統 </div>
+        </a>
+        <hr/>
+        <div class="message">快來留言吧</div>
+        <form action="/message" method="POST">
+            <div class="messagecontent">內容<input type="text" name="messagecontent"/></div>
+            <div class="btn-square">
+                <button class="btn"
+                    onmouseover="over(this);" onmouseout="out(this);"
+                    onmousedown="down(this);" onmouseup="up(this);"
+                >送出
+                </button>
+            </div>
+        </form>  
+        <hr/>
+        {% for x in result %}
+        <div class="messageall">
+            <span style=font-weight:bold>{{ x[0] }}</span> : {{x[1]}}
+        </div>
+        {% endfor %} 
+        <hr/>
+        <div class="usernameSearch">查詢會員姓名</div>
+        <div class="username">
+            <input type="text" name="username" id="username"/>
+            <div class="btn-square">
+                <button class="btn"
+                    onmouseover="over(this);" onmouseout="out(this);"
+                    onmousedown="down(this);" onmouseup="up(this);"
+                    onclick="getData();"
+                >查詢
+                </button>
+            </div>
+        </div>
+        <div id="searchResult"></div>
+        <hr/>
+        <div class="usernameUpdate">更新我的姓名</div>
+        <div class="username">
+            <input type="text" name="usernameUpdate" id="usernameUpdate"/>
+            <div class="btn-square">
+                <button class="btn"
+                    onmouseover="over(this);" onmouseout="out(this);"
+                    onmousedown="down(this);" onmouseup="up(this);"
+                    onclick="updateData();"
+                >更新
+                </button>
+            </div>
+        </div>
+        <div id="updateResult"></div>
+        <script>
+            function over(elem){
+                elem.style.backgroundColor="#ddaaaa";
+            }
+            function out(elem){
+                elem.style.backgroundColor="#ffcccc";
+                elem.style.fontWeight="normal"
+            }
+            function down(elem){
+                elem.style.fontWeight="bold";
+            }
+            function up(elem){
+                elem.style.fontWeight="normal";
+            }
+            // 要求⼆：前端透過 Fetch 連接 API 查詢會員資料，並顯⽰在畫⾯上
+            function getData(){
+                let nameSearch = document.getElementById("username").value
+                //利用 fetch 進行連線並取得資料
+                fetch("http://127.0.0.1:3000/api/member?username="+nameSearch)
+                .then(function(response){
+                   return response.json();
+                }).then(function(data){
+                    //已經取得資料，把資料呈現到畫面上
+                    let result=document.querySelector("#searchResult");          
+                    result.innerHTML="";    //先把畫面清空(就不會點擊時顯示出來一直疊加)
+                    let memberName=data.data.name;    
+                    result.innerHTML=memberName;
+                });
+            }
+            // 要求三：完成修改姓名的功能
+            function updateData(){
+                let nameUpdate = document.getElementById("usernameUpdate").value
+                let update = { 
+                    "name":nameUpdate
+                };
+
+                fetch("http://127.0.0.1:3000/api/member",{
+                    method:"PATCH",
+                    body:JSON.stringify(update),
+                    cache:"no-cache",
+                    headers:new Headers({
+                        "content-type":"application/json"
+                    })
+                })
+                .then(function(response){
+                    if(response.status !== 200){
+                        response.json().then(function(data){
+                        //console.log(`response status was not 200: ${response.status}`);
+                        let update=document.querySelector("#updateResult");          
+                        update.innerHTML="";    //先把畫面清空(就不會點擊時顯示出來一直疊加)    
+                        update.innerHTML="更新失敗";    
+                        })
+                    }                   
+                    response.json().then(function(data){
+                    let update=document.querySelector("#updateResult");          
+                    update.innerHTML="";    //先把畫面清空(就不會點擊時顯示出來一直疊加)    
+                    update.innerHTML="更新成功";   
+                    })                   
+                })
+            }
+        </script>
+    </body>
+</html>
