@@ -1,6 +1,6 @@
 
 # 載入 Flask 所有相關的工具
-from flask import Flask, request, render_template,redirect, session, jsonify, make_response  
+from flask import Flask, request, render_template,redirect, session, jsonify
 import json
 import mysql.connector
 
