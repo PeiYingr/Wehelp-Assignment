@@ -141,27 +141,30 @@ def api_member():
         cursor =  connection_object.cursor()
         query=("SELECT id, name, username FROM member where username=%s")
         cursor.execute(query,(username,))
-        resultAPI = cursor.fetchone()
+        result_api = cursor.fetchone()
         if "username" in session:   
-            if resultAPI!=None:    
+            if result_api!=None:    
                 response_json={
                     "data":{
-                        "id" : resultAPI[0], 
-                        "name" : resultAPI[1],
-                        "username" : resultAPI[2]
+                        "id" :result_api[0], 
+                        "name" : result_api[1],
+                        "username" : result_api[2]
                     }
                 }
-                # 把py的字典轉換為json格式
-                response_json=json.dumps(response_json, ensure_ascii=False) 
-                return response_json
-            else:
-                response_null={"data": resultAPI}
-                response_null=json.dumps(response_null)
-                return response_null
+            # 把py的字典轉換為json格式
+            # json.dumps僅是協助將字典或列表轉換為JSON的字串形式，Request Header的content-type會是text/html
+            # response=json.dumps(response_json, ensure_ascii=False)
+            # 使用 jsonify() 來處理回應的資訊，會把原本的數據序列化為 JSON ，並添加content-type為application/json標頭
+            response=jsonify(response_json)
+            return response 
+        else:
+            response_null={"data": result_api}
+            response=jsonify(response_null)
+            return response
     except:
         response_null={"data": None}
-        response_null=json.dumps(response_null)
-        return response_null
+        response=jsonify(response_null)
+        return response
     finally:
         cursor.close()
         connection_object.close()
