@@ -19,7 +19,8 @@
         <hr/>
         <div class="message">快來留言吧</div>
         <form action="/message" method="POST">
-            <div class="messagecontent">內容<input type="text" name="messagecontent"/></div>
+            <!--required 放在 input 中可以不讓使用者不輸入東西，如果使用者不輸入會跳出提示-->
+            <div class="messagecontent">內容<input type="text" name="messagecontent" required /></div>
             <div class="btn-square">
                 <button class="btn"
                     onmouseover="over(this);" onmouseout="out(this);"
@@ -91,6 +92,7 @@
                     result.innerHTML=memberName;
                 });
             }
+            
             // 要求三：完成修改姓名的功能
             function updateData(){
                 let nameUpdate = document.getElementById("usernameUpdate").value
@@ -111,13 +113,13 @@
                         response.json().then(function(data){
                         //console.log(`response status was not 200: ${response.status}`);
                         let update=document.querySelector("#updateResult");          
-                        update.innerHTML="";    //先把畫面清空(就不會點擊時顯示出來一直疊加)    
+                        //update.innerHTML="";    //先把畫面清空(就不會點擊時顯示出來一直疊加)    
                         update.innerHTML="更新失敗";    
                         })
                     }                   
                     response.json().then(function(data){
                     let update=document.querySelector("#updateResult");          
-                    update.innerHTML="";    //先把畫面清空(就不會點擊時顯示出來一直疊加)    
+                    //update.innerHTML="";    //先把畫面清空(就不會點擊時顯示出來一直疊加)    
                     update.innerHTML="更新成功";   
                     })                   
                 })

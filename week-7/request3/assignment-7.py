@@ -142,15 +142,14 @@ def api_member():
         query=("SELECT id, name, username FROM member where username=%s")
         cursor.execute(query,(username,))
         result_api = cursor.fetchone()
-        if "username" in session:   
-            if result_api!=None:    
-                response_json={
-                    "data":{
-                        "id" :result_api[0], 
-                        "name" : result_api[1],
-                        "username" : result_api[2]
-                    }
+        if "username" in session and result_api!=None:       
+            response_json={
+                "data":{
+                    "id" :result_api[0], 
+                    "name" : result_api[1],
+                    "username" : result_api[2]
                 }
+            }
             # 把py的字典轉換為json格式
             # json.dumps僅是協助將字典或列表轉換為JSON的字串形式，Request Header的content-type會是text/html
             # response=json.dumps(response_json, ensure_ascii=False)
