@@ -1,6 +1,6 @@
 
 # 載入 Flask 所有相關的工具
-from flask import Flask, request, render_template,redirect, session 
+from flask import Flask, request, render_template,redirect, session, jsonify, make_response  
 import json
 import mysql.connector
 
@@ -112,16 +112,19 @@ def api_member():
                 }
             }
             # 把py的字典轉換為json格式
-            response_json=json.dumps(response_json, ensure_ascii=False) 
-            return response_json
+            # json.dumps僅是協助將字典或列表轉換為JSON的字串形式，Request Header的content-type會是text/html
+            # response=json.dumps(response_json, ensure_ascii=False)
+            # 使用 jsonify() 來處理回應的資訊，會把原本的數據序列化為 JSON ，並添加content-type為application/json標頭
+            response=jsonify(response_json)
+            return response 
         else:
             response_null={"data": result_api}
-            response_null=json.dumps(response_null)
-            return response_null
+            response=jsonify(response_null)
+            return response
     else:
-        response_null={"data": None}
-        response_null=json.dumps(response_null)
-        return response_null
+        response_null={"data": result_api}
+        response=jsonify(response_null)
+        return response
 
 # 啟動網站伺服器，可透過 port 參數指定埠號
 app.run(port=3000)
